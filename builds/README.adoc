@@ -1,4 +1,4 @@
 = included builds
 
-these reusable projects will be included as builds for using as source-dependency inside modules projects
-note: to properly include build, it should has `settings.gradle` file
+. these reusable projects will be included as builds for using as source-dependency inside modules projects
+. note: to properly include build, it should has `settings.gradle` file
