@@ -1,0 +1,31 @@
+group 'daggerok'
+version '0.0.1'
+
+apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = 'daggerok.Main'
+
+// project-specific jar configuration
+jar {
+  manifest {
+    attributes 'Main-Class': mainClassName
+  }
+}
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  compile "$group:groovy-build",
+      "$group:kotlin-build"
+  compileOnly 'org.projectlombok:lombok:1.16.16'
+  testCompile 'junit:junit:4.12'
+}
+
+// fix order for task 'run' from application plugin:
+gradle.includedBuilds.collect({ it?.task(":assemble") }).each { ref ->
+  run.dependsOn ref
+  run.shouldRunAfter ref
+}

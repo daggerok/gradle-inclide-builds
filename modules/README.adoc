@@ -1,0 +1,3 @@
+= sub-projects
+
+all projects from that folder will be included into patent multi project as sub-project

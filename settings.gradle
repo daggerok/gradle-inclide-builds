@@ -1,0 +1,12 @@
+rootProject.name = 'gradle-inclide-builds'
+
+def buildsDir = file('builds')
+def builds = buildsDir.listFiles({ it.isDirectory() } as FileFilter)
+
+builds?.each { File build -> includeBuild(build) }
+
+def modulesRoot = 'modules'
+def modulesDir = file(modulesRoot)
+def modules = modulesDir.listFiles({ it.isDirectory() && it.name.endsWith('module') } as FileFilter)
+
+modules?.each { File subProjectDir -> include(":$modulesRoot:$subProjectDir.name") }

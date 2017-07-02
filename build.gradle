@@ -1,0 +1,43 @@
+plugins {
+  id 'idea'
+  id 'eclipse'
+}
+
+configure(allprojects) { p ->
+
+  apply plugin: 'java'
+  apply plugin: 'maven'
+  apply plugin: 'maven-publish'
+
+  group 'daggerok'
+  version '0.0.1'
+
+  sourceCompatibility = JavaVersion.VERSION_1_8
+  targetCompatibility = JavaVersion.VERSION_1_8
+
+  // fix jar archive
+  jar {
+    exclude "META-INF/*.MF", "META-INF/*.SF", "META-INF/*.DSA", "META-INF/*.RSA"
+    from {
+      configurations.compile.collect { file ->
+        file.isDirectory() ? file : zipTree(file)
+      }
+    }
+  }
+
+  repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+    google()
+  }
+
+  // fix task execution order:
+  [clean, assemble, test, build].each { targetTask ->
+    def targetName = targetTask.name
+    gradle.includedBuilds.collect({ it?.task(":$targetName") }).each { ref ->
+      targetTask.dependsOn ref
+      targetTask.shouldRunAfter ref
+    }
+  }
+}

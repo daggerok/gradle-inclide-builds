@@ -1,0 +1,19 @@
+= gradle-inclide-builds image:https://travis-ci.org/daggerok/gradle-inclide-builds.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/gradle-inclide-builds"]
+
+this repo is demonstrates, how useful are gradle included builds for development
+
+. `builds` contains reusable modules (usually they are locating in their own repository
+. `modules` contains sub-project we working on, which are uses some functionality from `builds` we wanna to include for comfortable development
+
+== quick start
+
+[source,bash]
+----
+gradle clean build
+----
+
+== stack:
+
+. gradle 4
+. gradle includeBuilds
+. link:https://github.com/daggerok/gradle-inclide-builds/tree/master/modules/main-java-module/src/main/java[lombok var]

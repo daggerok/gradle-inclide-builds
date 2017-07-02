@@ -1,0 +1,26 @@
+roup: edge
+language: java
+jdk: oraclejdk8
+install: true
+before_install:
+  # gradle
+  - curl -s "https://get.sdkman.io" | bash
+  - mkdir -p "$HOME/.sdkman/etc"
+  - touch "$HOME/.sdkman/etc/config"
+  - sed -i -e 's/^sdkman_auto_answer=false$/sdkman_auto_answer=true/g' "$HOME/.sdkman/etc/config"
+  - source "$HOME/.sdkman/bin/sdkman-init.sh"
+  - sdk use gradle
+  - source "$HOME/.sdkman/bin/sdkman-init.sh"
+script:
+  - gradle clean run
+  - gradle clean build
+  - java -jar modules/main-java-module/build/libs/*.jar
+before_cache:
+  - gradle --stop
+  - rm -rf $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+    - $HOME/.m2/
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
